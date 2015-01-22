@@ -28,6 +28,7 @@
     "validator": "3.27.0"
   },
   "devDependencies": {
+    "bower": "^1.3.12",
     "coffee-script": "1.8.0",
     "coffeelint": "1.8.1",
     "espower-coffee": "0.10.0",
