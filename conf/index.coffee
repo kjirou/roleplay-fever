@@ -2,6 +2,7 @@ session = require 'express-session'
 MongoStore = require('connect-mongo')(session)
 mongoose = require 'mongoose'
 pathModule = require 'path'
+wantit = require 'wantit'
 
 
 mongodbConf =
@@ -40,7 +41,7 @@ conf =
   auth:
     hmacSecretKey: 'secret_key'
   debug: true
-#  env: express().get 'env'
+  env: process.env.NODE_ENV
   mongodb: mongodbConf
   root: pathModule.resolve process.env.NODE_PATH
   server:
@@ -53,6 +54,9 @@ conf =
   session:
     secret: 'default_session_secret_key'
     mongodbStore: sessionMongoDbStoreConf
+
+
+wantit('conf/' + conf.env)?(conf)
 
 
 module.exports = conf
