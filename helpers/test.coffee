@@ -7,8 +7,6 @@ assert = require 'power-assert'
 {executeRemovingToEachModels} = require 'modules/mongoose-utils'
 
 
-exports = {}
-
 # 重複しないモデル名でモデルを作成する, 同名モデルは mongoose がエラーにするため
 _uniqueModelId = 0
 exports.createTestModel = (schema, callback) ->
