@@ -11,7 +11,7 @@ conf = require 'conf'
 
 describe 'app module', ->
 
-  describe 'Server', ->
+  describe 'server', ->
 
     it 'Webアプリケーションサーバを起動できる', (done) ->
       # @TODO listen でエラーを出す方法が不明でエラー時の動作確認してない
@@ -29,50 +29,49 @@ describe 'app module', ->
     #it 'アプリのルート設定が静的ファイルパスによるルート設定より優先される'
 
 
-  describe 'Login', ->
+  describe 'login', ->
 
-  #  before ->
-  #    self = @
-  #    @prepareAndFindUser = (callback) ->
-  #      monky.create 'User', (e, user) ->
-  #        return callback e if e
-  #        User.findOneById user._id, (e, user) ->
-  #          return callback e if e
-  #          callback null, user
+    before ->
+      @prepareAndFindUser = (callback) ->
+        monky.create 'User', (e, user) ->
+          return callback e if e
+          User.findOneById user._id, (e, user) ->
+            return callback e if e
+            callback null, user
 
-  #    @sessionStore = conf.session.mongodbStore.prepareConnection()
+      @sessionStore = conf.session.mongodbStore.prepareConnection()
 
-  #    # セッションデータ全行を配列で返す
-  #    @findSessionRows = (callback) ->
-  #      self.sessionStore._get_collection (coll) ->
-  #        coll.find().toArray callback
+      # セッションデータ全行を配列で返す
+      @findSessionRows = (callback) =>
+        @sessionStore.getCollection (coll) ->
+          coll.find().toArray callback
 
-  #    # JSON文字列から復元したセッション情報を配列で返す
-  #    @findSessions = (callback) ->
-  #      @findSessionRows (e, sessionRows) ->
-  #        return callback e if e
-  #        sessions = for sessionRow in sessionRows
-  #          JSON.parse sessionRow.session
-  #        callback null, sessions
+      # JSON文字列から復元したセッション情報を配列で返す
+      @findSessions = (callback) ->
+        @findSessionRows (e, sessionRows) ->
+          return callback e if e
+          sessions = for sessionRow in sessionRows
+            JSON.parse sessionRow.session
+          callback null, sessions
 
-  #    @extractLoggedInSessions = (sessions, userId) ->
-  #      (session for session in sessions when userId.toString() is session.passport?.user)
+      @extractLoggedInSessions = (sessions, userId) ->
+        (session for session in sessions when userId.toString() is session.passport?.user)
 
-  #  beforeEach (done) ->
-  #    @sessionStore.clear (e) =>
-  #      return done e if e
-  #      @findSessionRows (e, sessionRows) ->
-  #        return done e if e
-  #        # Ref #98
-  #        if sessionRows.length > 0
-  #          console.error '---- In beforeEach ----'
-  #          console.error sessionRows
-  #        User.remove done
+    beforeEach (done) ->
+      @sessionStore.clear (e) =>
+        return done e if e
+        @findSessionRows (e, sessionRows) ->
+          return done e if e
+          # Ref https://github.com/kjirou/si_of_sis/issues/98
+          if sessionRows.length > 0
+            console.error '---- In beforeEach ----'
+            console.error sessionRows
+          User.remove done
 
   #  it 'ユーザーがPOSTでログインできる', (done) ->
   #    self = @
   #    @findSessionRows (e, beforeSessionRows) ->
-  #      # Ref #98
+         # Ref https://github.com/kjirou/si_of_sis/issues/98
   #      if beforeSessionRows.length > 0
   #        console.error beforeSessionRows
   #      self.prepareAndFindUser (e, user) ->
@@ -83,11 +82,11 @@ describe 'app module', ->
   #          .expect 200
   #          .end ->
   #            self.findSessionRows (e, sessionRows) ->
-  #              # Ref #98
+                 # Ref https://github.com/kjirou/si_of_sis/issues/98
   #              if sessionRows.length > 1
   #                console.error sessionRows
   #              # 2 行なのは、稀にテスト開始前にデータがクリアされていないことがあるため
-  #              # とりあえず諦めて 2 行で判定している、Ref #98
+  #              # とりあえず諦めて 2 行で判定している、https://github.com/kjirou/si_of_sis/issues/98
   #              assert sessionRows.length >= 1
   #              self.findSessions (e, sessions) ->
   #                loggedInSessions = self.extractLoggedInSessions sessions, user._id
