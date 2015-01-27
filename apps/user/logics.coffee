@@ -3,7 +3,7 @@ _ = require 'lodash'
 LocalStrategy = require('passport-local').Strategy
 
 {User} = require 'apps/user/models'
-#{Field, Form} = require 'modules/validator'
+{Field, Form} = require 'modules/validator'
 
 
 @passportConfigurations =
@@ -49,55 +49,44 @@ LocalStrategy = require('passport-local').Strategy
         callback null,
           user: user
 
-#class UserForm extends Form
-#  constructor: ->
-#    super
-#    self = @
-#    @_user = null
-#    @field 'email', ((new Field)
-#      .type 'isRequired'
-#      .type 'isEmail'
-#      .type 'isLength', [1, 64]
-#      .custom ({value}, callback) ->
-#        User.queryActiveUserByEmail(value).findOne().exec (e, user) ->
-#          if e
-#            callback e
-#          else if not user or self._user?.email is value
-#            callback null, {isValid:true}
-#          else
-#            callback null, {isValid:false, message:'Duplicated email'}
-#    )
-#    @field 'password', ((new Field)
-#      .type 'isRequired'
-#      .type 'isAlphanumeric'
-#      .type 'isLength', [4, 16]
-#    )
-#  bindUser: (@_user) ->
-#
-#logics.postUser = (user, values, callback) ->
-#  form = new UserForm values
-#  isNew = true
-#  if user
-#    isNew = false
-#    form.bindUser user
-#    form.getField('password').options.passIfEmpty = true
-#  else
-#    user = new User
-#  form.validate (e, validated) ->
-#    return callback e if e
-#    return callback null, validated unless validated.isValid
-#    user.email = values.email
-#    user.setPassword values.password if values.password
-#    user.save (e) ->
-#      return callback e if e
-#      if isNew
-#        company = new Company
-#        company.user = user._id
-#        company.cash = 10000 + _.random 40000
-#        company.max_stamina = 100 + _.random 100
-#        company.supplyStaminaFully()
-#        company.save (e) ->
-#          return callback e if e
-#          callback null, user
-#      else
-#        callback null, user
+class UserForm extends Form
+  constructor: ->
+    super
+    self = @
+    @_user = null
+    @field 'email', ((new Field)
+      .type 'isRequired'
+      .type 'isEmail'
+      .type 'isLength', [1, 64]
+      .custom ({value}, callback) ->
+        User.queryActiveUserByEmail(value).findOne().exec (e, user) ->
+          if e
+            callback e
+          else if not user or self._user?.email is value
+            callback null, {isValid:true}
+          else
+            callback null, {isValid:false, message:'Duplicated email'}
+    )
+    @field 'password', ((new Field)
+      .type 'isRequired'
+      .type 'isAlphanumeric'
+      .type 'isLength', [4, 16]
+    )
+  bindUser: (@_user) ->
+
+@postUser = (user, values, callback) ->
+  form = new UserForm values
+  isNew = true
+  if user
+    isNew = false
+    form.bindUser user
+    form.getField('password').options.passIfEmpty = true
+  else
+    user = new User
+  form.validate (e, validationResult) ->
+    return callback e if e
+    return callback null, validationResult unless validationResult.isValid
+    user.email = values.email
+    user.setPassword values.password if values.password
+    user.save (e) ->
+      callback null, user
