@@ -3,10 +3,10 @@ mongoose = require 'mongoose'
 {ObjectId} = mongoose.Types
 assert = require 'power-assert'
 
-#{Company, User} = require('apps').models
-#{resetDatabase} = require 'helpers/database'
-#testHelper = require 'helpers/test'
-#{monky, valueSets} = require 'helpers/monky'
+{User} = require('apps').models
+{resetDatabase} = require 'helpers/database'
+testHelper = require 'helpers/test'
+{monky, valueSets} = require 'helpers/monky'
 {isObjectId, toObjectIdCondition, purgeDatabase,
   assertPopulated, executeRemovingToEachModels} = require 'modules/mongoose-utils'
 
@@ -38,22 +38,22 @@ describe 'mongoose-utils module', ->
   #        assertPopulated company, 'user'
   #        done()
 
-  #it 'purgeDatabase', (done) ->
-  #  # モデルを空にして 0 件か
-  #  testHelper.createTestModel new Schema, (e, Test) ->
-  #    return done e if e
-  #    Test.remove ->
-  #      Test.find().count (e, count) ->
-  #        assert count is 0
-  #        # 1 件保存して 1 件か
-  #        (new Test).save (e) ->
-  #          Test.find().count (e, count) ->
-  #            assert count is 1
-  #            # purgeDatabase して 0 件か
-  #            purgeDatabase (e) ->
-  #              Test.find().count (e, count) ->
-  #                assert count is 0
-  #                done()
+  it 'purgeDatabase', (done) ->
+    # モデルを空にして 0 件か
+    testHelper.createTestModel new Schema, (e, Test) ->
+      return done e if e
+      Test.remove ->
+        Test.find().count (e, count) ->
+          assert count is 0
+          # 1 件保存して 1 件か
+          (new Test).save (e) ->
+            Test.find().count (e, count) ->
+              assert count is 1
+              # purgeDatabase して 0 件か
+              purgeDatabase (e) ->
+                Test.find().count (e, count) ->
+                  assert count is 0
+                  done()
 
   #it 'executeRemovingToEachModels', (done) ->
   #  resetDatabase ->
