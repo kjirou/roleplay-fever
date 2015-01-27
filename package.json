@@ -55,6 +55,7 @@
     "url": "https://github.com/kjirou/roleplay-fever"
   },
   "scripts": {
+    "ci-test": "mocha",
     "dev": "node-dev ./bin/www.js",
     "start": "node ./bin/www.js",
     "test": "mocha"
