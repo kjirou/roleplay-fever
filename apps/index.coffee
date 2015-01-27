@@ -7,6 +7,7 @@ wantit = require 'wantit'
 # Sub Applications
 #
 subAppNames = [
+  'core'
   'user'
 ]
 
@@ -17,7 +18,7 @@ for subAppName in subAppNames
     path: path
     models: wantit "#{path}/models"
     logics: wantit "#{path}/logics"
-    routes: wantit "#{path}"
+    routes: wantit "#{path}/routes"
 
 
 #
@@ -31,14 +32,11 @@ for unused, subApp of subApps
 #
 # Routing
 #
-#do ({business, company, core, home, user}=subApps) ->
-#  core.routes.addRoute 'business', business.routes
-#  core.routes.addRoute 'company', company.routes
-#  core.routes.addRoute 'home', home.routes
-#  core.routes.addRoute 'user', user.routes
+do ({core, user}=subApps) ->
+  core.routes.use '/user', user.routes
 
 
 module.exports =
-  #routes: subApps.core.routes
+  routes: subApps.core.routes
   models: models
   subApps: subApps
