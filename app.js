@@ -1,11 +1,14 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var express = require('express');
+var session = require('express-session');
+var logger = require('morgan');
+var path = require('path');
+var favicon = require('serve-favicon');
 
 var apps = require('apps');
+var conf = require('conf');
+
 
 var app = express();
 
@@ -20,7 +23,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: conf.session.secret,
+  cookie: {
+    maxAge: 365 * 24 * 60 * 60 * 1000
+  },
+  store: conf.session.mongodbStore.prepareConnection()
+}));
 app.use('/', apps.routes);
 
 // catch 404 and forward to error handler

@@ -39,7 +39,7 @@ sessionMongoDbStoreConf =
 
 conf =
   auth:
-    hmacSecretKey: 'secret_key'
+    hmacSecretKey: 'your_secret_key'
   debug: true
   env: process.env.NODE_ENV
   mongodb: mongodbConf
@@ -52,7 +52,7 @@ conf =
     logFormatType: null
     port: '3000'
   session:
-    secret: 'default_session_secret_key'
+    secret: 'your_secret_key'
     mongodbStore: sessionMongoDbStoreConf
 
 
