@@ -44,6 +44,8 @@ conf = require 'conf'
     basedir: conf.viewRoot
     pretty: true
 
+  subApp.models = {}
+
   subApp.use @_createSubAppMiddleware subAppName
 
   subApp

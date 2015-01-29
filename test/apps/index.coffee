@@ -8,5 +8,4 @@ describe 'apps module', ->
 
   it 'properties definition', ->
     assert.strictEqual typeof apps.models, 'object'
-    assert.strictEqual typeof apps.routes, 'function'
     assert.strictEqual typeof apps.subApps, 'object'

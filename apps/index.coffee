@@ -1,24 +1,18 @@
 async = require 'async'
 _ = require 'lodash'
-wantit = require 'wantit'
+
+{getSubAppRoot} = require 'lib/sub-app'
 
 
 #
 # Sub Applications
 #
-subAppNames = [
+subApps = {}
+[
   'core'
   'user'
-]
-
-subApps = {}
-for subAppName in subAppNames
-  path = "apps/#{subAppName}"
-  subApps[subAppName] =
-    path: path
-    models: wantit "#{path}/models"
-    logics: wantit "#{path}/logics"
-    routes: wantit "#{path}/routes"
+].forEach (subAppName) ->
+  subApps[subAppName] = require getSubAppRoot subAppName
 
 
 #
@@ -33,10 +27,9 @@ for unused, subApp of subApps
 # Routing
 #
 do ({core, user}=subApps) ->
-  core.routes.use '/user', user.routes
+  core.use '/user', user
 
 
 module.exports =
-  routes: subApps.core.routes
   models: models
   subApps: subApps

@@ -53,7 +53,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', apps.routes);
+app.use('/', apps.subApps.core);
 
 
 // catch 404 and forward to error handler
