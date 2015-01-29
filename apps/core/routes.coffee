@@ -4,8 +4,7 @@ express = require 'express'
 router = express.Router()
 
 router.get '/', (req, res) ->
-  res.render 'index',
-    title: 'Express'
+  res.render 'apps/core/index'
 
 
 module.exports = router

@@ -2,11 +2,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var express = require('express');
 var session = require('express-session');
+var _ = require('lodash');
 var logger = require('morgan');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var path = require('path');
 var favicon = require('serve-favicon');
+var _s = require('underscore.string');
 
 var apps = require('apps');
 var passportConfigurations = require('apps/user/logics').passportConfigurations;
@@ -21,6 +23,17 @@ var app = express();
 //
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+
+//
+// locals
+//
+app.locals = {
+  _: _,
+  _s: _s,
+  basedir: app.get('views'),
+  pretty: true
+};
 
 
 //
