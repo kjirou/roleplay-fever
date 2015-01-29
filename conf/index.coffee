@@ -36,14 +36,20 @@ sessionMongoDbStoreConf =
       clear_interval: sessionMongoDbStoreConf.clearInterval
     }
 
+root = pathModule.resolve process.env.NODE_PATH
+appsRoot = pathModule.join root, 'apps'
+viewRoot = pathModule.join root, 'views'
+appsViewRoot = pathModule.join viewRoot, 'apps'
 
 conf =
+  appsRoot: appsRoot
+  appsViewRoot: appsViewRoot
   auth:
     hmacSecretKey: 'your_secret_key'
   debug: true
   env: process.env.NODE_ENV
   mongodb: mongodbConf
-  root: pathModule.resolve process.env.NODE_PATH
+  root: root
   server:
     # true=ログを全く出力しない、false=全リクエストを出力、
     #   null=デフォルト（静的ファイルは拡張子で除外など）に従う
@@ -54,6 +60,7 @@ conf =
   session:
     secret: 'your_secret_key'
     mongodbStore: sessionMongoDbStoreConf
+  viewRoot: viewRoot
 
 
 wantit('conf/' + conf.env)?(conf)
