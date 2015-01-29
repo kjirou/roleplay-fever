@@ -5,7 +5,6 @@ _s = require 'underscore.string'
 
 conf = require 'conf'
 {bindPathRoot} = require 'lib/core'
-{subAppData} = require 'lib/middlewares/core'
 
 
 @getSubAppRoot = (subAppName) ->

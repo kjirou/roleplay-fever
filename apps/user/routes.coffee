@@ -1,9 +1,11 @@
-express = require 'express'
-router = express.Router()
+{create} = require 'lib/sub-app'
 
 
-router.get '/', (req, res) ->
+app = create 'core'
+
+
+app.get '/', (req, res) ->
   res.send 'respond with a resource'
 
 
-module.exports = router
+module.exports = app

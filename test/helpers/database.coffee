@@ -5,7 +5,7 @@ apps = require 'apps'
 databaseHelper = require 'helpers/database'
 
 
-describe 'database Helper', ->
+describe 'database helper', ->
 
   before ->
     @mocks = []
