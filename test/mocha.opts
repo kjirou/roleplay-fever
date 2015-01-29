@@ -2,4 +2,4 @@
 --require espower-coffee-loader
 --require env/test.coffee
 --recursive
---timeout 2000
+--timeout 5000
