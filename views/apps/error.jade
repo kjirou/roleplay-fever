@@ -1,0 +1,9 @@
+extends /apps/layouts/welcome
+
+
+block stylesheetsBlock
+
+
+block bodyBlock
+  h1 #{error.status || '???'} #{error.message}
+  pre #{error.stack}
