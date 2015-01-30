@@ -1,13 +1,26 @@
 #express = require 'express'
 _ = require 'lodash'
-#morgan = require 'morgan'
+morgan = require 'morgan'
 pathModule = require 'path'
-#urlModule = require 'url'
+urlModule = require 'url'
 
 conf = require 'conf'
 #{Http404Error} = require 'lib/errors'
 #mongooseUtils = require 'modules/mongoose-utils'
 
+
+@logServer = ->
+  formatType = conf.server.logFormatType ?
+    if conf.env is 'production' then 'combined' else 'dev'
+  morgan formatType,
+    skip: (req, res) ->
+      switch conf.server.logFiltering
+        when true
+          return true
+        when false
+          return false
+      urlData = urlModule.parse req.url
+      /\.(css|gif|jpeg|jpg|js|png|woff)$/.test urlData.pathname
 
 ## パス内の :id から指定モデルのドキュメントを抽出し req.doc へ格納する
 ## パス以外からも受け取れるようにする必要が出るかも
@@ -49,16 +62,3 @@ conf = require 'conf'
 #  (req, res, next) ->
 #    req.disableCsrf = true
 #    next()
-#
-#@logServer = ->
-#  formatType = conf.server.logFormatType ?
-#    if conf.env is 'production' then 'combined' else 'dev'
-#  morgan formatType,
-#    skip: (req, res) ->
-#      switch conf.server.logFiltering
-#        when true
-#          return true
-#        when false
-#          return false
-#      urlData = urlModule.parse req.url
-#      /\.(css|gif|jpeg|jpg|js|png|woff)$/.test urlData.pathname
