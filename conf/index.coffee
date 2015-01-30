@@ -48,6 +48,8 @@ conf =
     hmacSecretKey: 'your_secret_key'
   debug: true
   env: process.env.NODE_ENV
+  logger:
+    levels: ['log', 'error']
   mongodb: mongodbConf
   root: root
   server:
