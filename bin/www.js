@@ -5,38 +5,17 @@ require('coffee-script/register');
 require('../env/development');
 
 
-var app = require('../app');
 var http = require('http');
 
+var app = require('app');
+var conf = require('conf');
 var logger = require('lib/logger')();
 
 
-/**
- * Get port from environment and store in Express.
- */
-
-var port = parseInt(process.env.PORT, 10) || 3000;
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
+var port = parseInt(conf.server.port, 10);
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
+server.on('error', function(error){
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -44,22 +23,20 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error('Port ' + port + ' requires elevated privileges');
+      logger.error('Port ' + port + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error('Port ' + port + ' is already in use');
+      logger.error('Port ' + port + ' is already in use');
       process.exit(1);
       break;
     default:
       throw error;
   }
-}
+});
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
+server.on('listening', function(){
   logger.log('Listening on port ' + server.address().port);
-}
+});
+
+server.listen(port);
