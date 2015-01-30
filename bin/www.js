@@ -5,13 +5,11 @@ require('coffee-script/register');
 require('../env/development');
 
 
-/**
- * Module dependencies.
- */
-
 var app = require('../app');
-var debug = require('debug')('roleplay-fever:server');
 var http = require('http');
+
+var logger = require('lib/logger')();
+
 
 /**
  * Get port from environment and store in Express.
@@ -63,5 +61,5 @@ function onError(error) {
  */
 
 function onListening() {
-  debug('Listening on port ' + server.address().port);
+  logger.log('Listening on port ' + server.address().port);
 }
