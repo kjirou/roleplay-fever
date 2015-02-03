@@ -5,23 +5,19 @@ mixin baseFormField(fieldName, options)
   - var value = 'value' in options ? options.value : ''
   - var type = 'type' in options ? options.type : 'text'
   - var placeholder = 'placeholder' in options ? options.placeholder : _s.titleize(_s.humanize(fieldName))
-  - var icon = 'icon' in options ? options.icon : 'right arrow'
   - var required = 'required' in options ? options.required : false
   - var error = 'error' in options ? options.error : null
-  .field
-    label #{label}
-    .ui.left.labeled.icon.input
-      input(type=type, name=name, value=value, placeholder=placeholder)
-      i.icon(class=icon)
+  div
+    div
+      label #{label}
       if required
-        .ui.corner.label
-          i.asterisk.icon
+        span(style='color:red;') *
+      input(type=type, name=name, value=value, placeholder=placeholder)
   if error
     - var fieldErrors = error.report()[fieldName]
     if fieldErrors
-      .ui.red.message
-        each fieldError in fieldErrors
-          p #{fieldError.msg}
+      each fieldError in fieldErrors
+        p(style='color:red;') #{fieldError.msg}
 
 mixin formField(fieldName, value, error, options)
   - options = options || {}

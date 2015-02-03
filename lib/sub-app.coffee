@@ -18,6 +18,9 @@ conf = require 'conf'
   subAppViewRoot = @getSubAppViewRoot subAppName
 
   (req, res, next) ->
+    req.subApp =
+      url: req.baseUrl + req.url
+
     res.subApp = {}
 
     res.subApp.render = _.bind(bindPathRoot(subAppViewRoot, res.render), res)

@@ -9,6 +9,14 @@ conf = require 'conf'
 {toObjectIdCondition} = require 'modules/mongoose-utils'
 
 
+# route を通る場合の共通テンプレート変数
+@routeLocals = ->
+  (req, res, next) ->
+    _.extend res.locals,
+      req: req
+    next()
+
+# Web サーバの出力を行う
 @logServer = ->
   formatType = conf.server.logFormatType ?
     if conf.env is 'production' then 'combined' else 'dev'
