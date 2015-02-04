@@ -4,6 +4,7 @@ extends /apps/layouts/welcome
 block contentBlock
   h2 Tmp
   ul
+    li: span #{req.user ? req.user.user.email : 'Guest'}
     li: a(href='/login') /login
     li: a(href='/logout') /logout
     li: a(href='/user/create') /user/create
