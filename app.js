@@ -60,6 +60,10 @@ app.use(session({
   },
   store: conf.session.mongodbStore.prepareConnection()
 }));
+if (conf.env === 'test') {
+  app.use(coreMiddlewares.disableCsrf());
+}
+app.use(coreMiddlewares.csrf());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(coreMiddlewares.routeLocals());

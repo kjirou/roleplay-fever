@@ -1,4 +1,4 @@
-#express = require 'express'
+csurf = require 'csurf'
 httpErrors = require 'http-errors'
 _ = require 'lodash'
 morgan = require 'morgan'
@@ -61,14 +61,14 @@ conf = require 'conf'
   @applyObjectId model,
     errorCreator: -> httpErrors 404
 
-#@csrf = ->
-#  (req, res, next) ->
-#    if req.disableCsrf
-#      next()
-#    else
-#      express.csrf()(req, res, next)
-#
-#@disableCsrf = ->
-#  (req, res, next) ->
-#    req.disableCsrf = true
-#    next()
+@csrf = ->
+  (req, res, next) ->
+    if req.disableCsrf
+      next()
+    else
+      csurf()(req, res, next)
+
+@disableCsrf = ->
+  (req, res, next) ->
+    req.disableCsrf = true
+    next()

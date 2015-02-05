@@ -5,7 +5,7 @@ extends /apps/layouts/welcome
 block contentBlock
   h2 Login
   form(action=req.subApp.url, method='POST')
-    //-input(type='hidden', name='_csrf', value=req.csrfToken())
+    input(type='hidden', name='_csrf', value=req.csrfToken())
     +emailField('email', inputs.email, error)
     +passwordField('password', inputs.password, error)
     input(type='submit', value='Login')
