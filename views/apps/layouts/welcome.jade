@@ -2,8 +2,10 @@ extends /apps/layouts/base
 
 
 block bodyBlock
-  header
-    h1
-      a(href='/') Roleplay Fever
-  main
-    block contentBlock
+  .container
+    header.row
+      h1.col-xs-12
+        a(href='/') Roleplay Fever
+    main.row
+      .col-xs-12
+        block contentBlock
