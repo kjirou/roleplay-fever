@@ -3,7 +3,7 @@ extends /apps/layouts/welcome
 
 
 block contentBlock
-  h2 Login
+  h2 Sign In
   form(action=req.subApp.url, method='POST')
     input(type='hidden', name='_csrf', value=req.csrfToken())
     +emailField('email', inputs.email, error)
