@@ -34,8 +34,7 @@ app.all '/login', (req, res, next) ->
         else
           req.login user, (e) ->
             return next e if e
-            #res.redirect '/home'
-            res.redirect '/'
+            res.redirect '/home'
       authMiddleware req, res, next
     else
       next httpErrors 404

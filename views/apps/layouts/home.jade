@@ -10,13 +10,8 @@ block bodyBlock
             a.navbar-brand(href='/') Roleplay Fever
           .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
-              //- .active でカレントを示す
-              if req.user
                 li: a(href='/home') Home
                 li: a(href='/logout') Sign Out
-              else
-                li: a(href='/login') Sign In
-                li: a(href='/user/create') Sign Up
     main.row
       .col-xs-12
         block contentBlock

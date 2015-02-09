@@ -10,6 +10,7 @@ _ = require 'lodash'
 subApps = {}
 [
   'core'
+  'home'
   'user'
 ].forEach (subAppName) ->
   subApps[subAppName] = require getSubAppRoot subAppName
@@ -26,7 +27,8 @@ for unused, subApp of subApps
 #
 # Routing
 #
-do ({core, user}=subApps) ->
+do ({core, home, user}=subApps) ->
+  core.use '/home', home
   core.use '/user', user
 
 
