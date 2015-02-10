@@ -21,9 +21,5 @@ describe 'app module', ->
           return done e if e
           done()
 
-    #it '静的ファイルへリクエストできる', (done) ->
-    #  # robots.txt を代表にする
-    #  request(app).get('/robots.txt').expect(200).end done
-
-    ## 手動ではテスト済み、ルートを app から削除する方法がわからなかった
-    #it 'アプリのルート設定が静的ファイルパスによるルート設定より優先される'
+    it '静的ファイルへリクエストできる', (done) ->
+      request(app).get('/robots.txt').expect(200).end done

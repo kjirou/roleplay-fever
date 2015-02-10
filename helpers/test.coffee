@@ -3,7 +3,7 @@ mongoose = require 'mongoose'
 {ObjectId} = mongoose.Types
 assert = require 'power-assert'
 
-#{User} = require('apps').models
+{User} = require('apps').models
 {executeRemovingToEachModels} = require 'modules/mongoose-utils'
 
 
@@ -31,9 +31,13 @@ exports.createUniqueObjectId = ->
   _createdObjectIdStrings.push idStr
   ObjectId idStr
 
-## 削除メソッド群
-#exports.removeUserCompletely = (callback) ->
-#  executeRemovingToEachModels [Company, User], callback
+#
+# ドキュメント掃除メソッド群
+#
+# あるモデルとそれに関連するモデルの全ドキュメントを削除する
+#
+exports.purgeUsers = (callback) ->
+  executeRemovingToEachModels [User], callback
 
 # エラーオブジェクトが、指定フィールドの mongoose CastError であることを確認する
 # CastError = type に反する値を入れた場合のエラー

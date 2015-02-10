@@ -46,7 +46,8 @@
     "node-dev": "2.6.0",
     "power-assert": "0.10.1",
     "sinon": "1.12.2",
-    "supertest": "0.15.0"
+    "supertest": "0.15.0",
+    "supertest-session": "0.0.7"
   },
   "homepage": "https://github.com/kjirou/roleplay-fever",
   "main": "bin/www",
