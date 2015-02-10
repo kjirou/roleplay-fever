@@ -3,12 +3,10 @@ express = require 'express'
 assert = require 'power-assert'
 request = require 'supertest'
 
-app = require 'app'
-
 
 describe 'express-4.x vendor', ->
 
-  describe 'app', ->
+  describe 'app mounting', ->
 
     it '親子関係ではない複数app間でsetした値が共有されていない', ->
       fooApp = express()

@@ -5,7 +5,7 @@ mongoose = require 'mongoose'
 
 databaseHelper = require 'helpers/database'
 testHelper = require 'helpers/test'
-#{validator} = require 'modules/validator'
+{validator} = require 'modules/validator'
 
 
 describe 'test helper', ->
@@ -37,4 +37,4 @@ describe 'test helper', ->
     for i in [0..99]
       id = testHelper.createUniqueObjectId()
       assert id instanceof ObjectId
-      #assert validator.isMongoId id.toString()
+      assert validator.isMongoId id.toString()
